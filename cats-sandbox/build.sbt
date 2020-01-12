@@ -16,4 +16,12 @@ scalacOptions ++= Seq(
 
 libraryDependencies += "org.typelevel" %% "cats-core" % "1.4.0"
 
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+scalacOptions in (Compile, console) ~= {
+  _.filterNot(Set("-Ywarn-unused-import", "-Xfatal-warnings", "-Xlint"))
+}
+scalacOptions in (Test, console) ~= {
+  _.filterNot(Set("-Ywarn-unused-import", "-Xfatal-warnings", "-Xlint"))
+}
+
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
