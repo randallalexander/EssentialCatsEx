@@ -1,8 +1,14 @@
 package sandbox.ch1
 
 import PrintableInstances._
-import cats._
-import cats.implicits._
+import cats.Eq
+import cats.Show
+import cats.instances.int._
+import cats.instances.string._
+import cats.syntax.eq._
+import cats.syntax.show._
+
+
 
 final case class Cat(name: String, age: Int, color: String)
 
@@ -18,4 +24,11 @@ object Cat {
 
   implicit val catShow: Show[Cat] =
     Show.show(cat => s"${cat.name.show} is a ${cat.age.show} year-old ${cat.color.show} cat.")
+
+  implicit val catEq: Eq[Cat] =
+    Eq.instance[Cat] { (cat1, cat2) =>
+      (cat1.age   === cat2.age) &&
+      (cat1.color === cat2.color) &&
+      (cat1.name  === cat2.name)
+    }
 }
